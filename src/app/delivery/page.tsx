@@ -5,15 +5,29 @@ export default function Delivery() {
         <div className="h-screen flex flex-col items-center justify-center pt-20">
 
             {/* Section 1 */}
-            <section className="w-full h-auto flex flex-col items-center justify-center gap-4 text-white p-4">
+            <section className="w-full h-screen flex flex-col items-center justify-center gap-4 text-white p-4 bg-[url(/fundo.avif)] bg-cover bg-center bg-no-repeat">
 
-                <Link href="/" className="bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white font-bold py-2 px-4 rounded">
-                    Ifood
-                </Link>
+                <div className="flex flex-col items-center justify-center gap-4 bg-white/80 bg-opacity-60 p-10 rounded">
 
-                <Link href="/" className="bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white font-bold py-2 px-4 rounded">
-                    Cardapio Web
-                </Link>
+                    <h1 className="text-3xl font-bold text-center text-black">Explore nosso cardápio</h1>
+
+                    <Link
+                        href="/"
+                        className="w-48 text-center bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white font-bold py-2 px-4 rounded"
+                        target="_blank"
+                    >
+                        Ifood
+                    </Link>
+
+                    <Link
+                        href="https://app.cardapioweb.com/mahal_sushi_bar?fbclid=PAZXh0bgNhZW0CMTEAAadMyiEMxduuKwAt3C9QiWZHvG5PzedLdr8xvkVoEW6w_DXTRnaKHO-Ruqnq3w_aem_eGD739mmgHzNMtQuqBttcA"
+                        className="w-48 text-center bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white font-bold py-2 px-4 rounded"
+                        target="_blank"
+                    >
+                        Cardapio Web
+                    </Link>
+
+                </div>
 
             </section>
 

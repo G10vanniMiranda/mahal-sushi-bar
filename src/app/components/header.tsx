@@ -20,13 +20,13 @@ export default function Header() {
     }, []);
 
     return (
-        <div className={`fixed top-0 left-0 w-full h-24 md:h-32 z-50 bg-white flex items-center justify-between p-8 md:px-28 transition-shadow duration-300 ${scrolled ? "shadow-md border-b border-gray-200" : ""}`}>
+        <div className={`fixed top-0 left-0 w-full h-24 md:h-32 z-50 bg-black flex items-center justify-between p-8 md:px-28 transition-shadow duration-300 ${scrolled ? "shadow-md border-b border-gray-200" : ""}`}>
 
             <Image
                 src="/logo.jpg"
                 alt="logo"
                 width={300} height={100}
-                className="w-20 md:w-28 h-auto object-contain"
+                className="w-20 md:w-28 h-auto object-contain rounded-full"
             />
 
             <button

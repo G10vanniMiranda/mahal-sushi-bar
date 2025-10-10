@@ -19,15 +19,27 @@ export default function Footer() {
 
                     <div className='flex gap-4 py-2'>
 
-                        <Link href="https://www.facebook.com/mahalsushibar" target="_blank">
+                        <Link
+                            href="https://www.facebook.com/mahalsushibar"
+                            target="_blank"
+                            aria-label="Facebook"
+                        >
                             <FaFacebook className='text-white text-3xl' />
                         </Link>
 
-                        <Link href="https://www.instagram.com/mahalsushibar/?__pwa=1#" target="_blank">
+                        <Link
+                            href="https://www.instagram.com/mahalsushibar/?__pwa=1#"
+                            target="_blank"
+                            aria-label="Instagram"
+                        >
                             <FaInstagram className='text-white text-3xl' />
                         </Link>
 
-                        <Link href="https://wa.me/5569999726369" target="_blank">
+                        <Link
+                            href="https://wa.me/5569999726369?text=Olá%2C+gostaria+de+fazer+um+pedido%21"
+                            target="_blank"
+                            aria-label="WhatsApp"
+                        >
                             <FaWhatsapp className='text-white text-3xl' />
                         </Link>
 
