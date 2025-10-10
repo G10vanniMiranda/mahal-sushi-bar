@@ -20,13 +20,13 @@ export default function Header() {
     }, []);
 
     return (
-        <div className={`fixed top-0 left-0 w-full h-24 md:h-32 z-50 bg-black flex items-center justify-between p-8 md:px-28 transition-shadow duration-300 ${scrolled ? "shadow-md border-b border-gray-200" : ""}`}>
+        <div className={`fixed top-0 left-0 w-full h-24 md:h-32 z-50 bg-white flex items-center justify-between p-8 md:px-28 transition-shadow duration-300 ${scrolled ? "shadow-md border-b border-gray-200" : ""}`}>
 
             <Image
-                src="/logo1.png"
+                src="/logo.jpg"
                 alt="logo"
                 width={300} height={100}
-                className="w-36 md:w-52 h-auto object-contain"
+                className="w-20 md:w-28 h-auto object-contain"
             />
 
             <button
@@ -34,43 +34,27 @@ export default function Header() {
                 onClick={() => setOpen(!open)}
                 aria-label="Abrir menu"
             >
-                <span className="block w-8 h-1 bg-blue-400 mb-1 rounded"></span>
-                <span className="block w-8 h-1 bg-blue-400 mb-1 rounded"></span>
-                <span className="block w-8 h-1 bg-blue-400 mb-1 rounded"></span>
+                <span className="block w-8 h-1 bg-yellow-400 mb-1 rounded"></span>
+                <span className="block w-8 h-1 bg-yellow-400 mb-1 rounded"></span>
+                <span className="block w-8 h-1 bg-yellow-400 mb-1 rounded"></span>
 
             </button>
 
             <div className='hidden md:flex items-center gap-10'>
                 <Link
                     href="/"
-                    className={`text-blue-500 border-b-2 transition ${pathname === "/" ? "border-blue-500" : "border-transparent hover:border-blue-500"
+                    className={`text-gold border-b-2 transition ${pathname === "/" ? "border-yellow-300" : "border-transparent hover:border-yellow-500"
                         }`}
                 >
-                    Inicio
+                    HOME
                 </Link>
 
                 <Link
-                    href="/servico"
-                    className={`text-blue-500 border-b-2 transition ${pathname === "/servico" ? "border-blue-500" : "border-transparent hover:border-blue-500"
+                    href="/delivery"
+                    className={`text-gold border-b-2 transition ${pathname === "/delivery" ? "border-yellow-300" : "border-transparent hover:border-yellow-500"
                         }`}
                 >
-                    Serviços
-                </Link>
-
-                <Link
-                    href="/portfolio"
-                    className={`text-blue-500 border-b-2 transition ${pathname === "/portfolio" ? "border-blue-500" : "border-transparent hover:border-blue-500"
-                        }`}
-                >
-                    Portfólio
-                </Link>
-
-                <Link
-                    href="/sobre"
-                    className={`text-blue-500 border-b-2 transition ${pathname === "/sobre" ? "border-blue-500" : "border-transparent hover:border-blue-500"
-                        }`}
-                >
-                    Sobre Nós
+                    DELIVERY
                 </Link>
             </div>
 
@@ -85,37 +69,19 @@ export default function Header() {
                         <Link
                             href="/"
                             onClick={() => setOpen(false)}
-                            className={`text-blue-500 border-b-2 transition ${pathname === "/" ? "border-blue-500" : "border-transparent hover:border-blue-500"
+                            className={`text-gold border-b-2 transition ${pathname === "/" ? "border-yellow-300" : "border-transparent hover:border-yellow-500"
                                 }`}
                         >
-                            Inicio
+                            HOME
                         </Link>
 
                         <Link
-                            href="/servico"
+                            href="/delivery"
                             onClick={() => setOpen(false)}
-                            className={`text-blue-500 border-b-2 transition ${pathname === "/servico" ? "border-blue-500" : "border-transparent hover:border-blue-500"
+                            className={`text-gold border-b-2 transition ${pathname === "/delivery" ? "border-yellow-300" : "border-transparent hover:border-yellow-500"
                                 }`}
                         >
-                            Serviços
-                        </Link>
-
-                        <Link
-                            href="/portfolio"
-                            onClick={() => setOpen(false)}
-                            className={`text-blue-500 border-b-2 transition ${pathname === "/portfolio" ? "border-blue-500" : "border-transparent hover:border-blue-500"
-                                }`}
-                        >
-                            Portfólio
-                        </Link>
-
-                        <Link
-                            href="/sobre"
-                            onClick={() => setOpen(false)}
-                            className={`text-blue-500 border-b-2 transition ${pathname === "/sobre" ? "border-blue-500" : "border-transparent hover:border-blue-500"
-                                }`}
-                        >
-                            Sobre Nós
+                            DELIVERY
                         </Link>
                     </div>
 

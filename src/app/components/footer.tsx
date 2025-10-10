@@ -10,25 +10,24 @@ export default function Footer() {
 
                 <div className='flex flex-col gap-4'>
 
-                    <h1 className='text-white text-2xl font-bold'>Primeiro Ato</h1>
+                    <h1 className='text-white text-2xl font-bold'>Mahal Sushi Bar</h1>
 
                     <div className='flex flex-col gap-2'>
-                        <h2 className='text-white'>Agência criativa de marketing e tecnologia, com atuação nacional.</h2>
-                        <h2 className='text-white'>Localização: Rua Gonçalves Dias, 110 - Sala 18</h2>
-                        <h2 className='text-white'>Centro - Porto Velho - RO</h2>
+                        <h2 className='text-white'>Experimente o melhor da culinária japonesa com ingredientes frescos.</h2>
+                        <h2 className='text-white'>Apenas Delivery</h2>
                     </div>
 
                     <div className='flex gap-4 py-2'>
 
-                        <Link href="https://www.facebook.com/sscontabilidade" target="_blank">
+                        <Link href="https://www.facebook.com/mahalsushibar" target="_blank">
                             <FaFacebook className='text-white text-3xl' />
                         </Link>
 
-                        <Link href="https://www.instagram.com/sscontabilidadeconsultoria/?__pwa=1#" target="_blank">
+                        <Link href="https://www.instagram.com/mahalsushibar/?__pwa=1#" target="_blank">
                             <FaInstagram className='text-white text-3xl' />
                         </Link>
 
-                        <Link href="https://wa.me/5569993533868" target="_blank">
+                        <Link href="https://wa.me/5569999726369" target="_blank">
                             <FaWhatsapp className='text-white text-3xl' />
                         </Link>
 
@@ -38,12 +37,10 @@ export default function Footer() {
 
                 <div className='flex flex-col gap-4'>
 
-                    <h2 className='text-white text-2xl font-bold'>Entre em contato:</h2>
+                    <h2 className='text-white text-2xl font-bold'>Horário de Funcionamento</h2>
 
                     <div className='flex flex-col gap-2'>
-                        <h2 className='text-white'>Telefone: +55 (69) 99325-7997</h2>
-                        <h2 className='text-white'>Telefone: +55 (69) 98117-5481</h2>
-                        <h2 className='text-white'>primeiroatodigital@gmail.com</h2>
+                        <h2 className='text-white'>Terça a Domingo - 19:00 às 23:00</h2>
                     </div>
 
                 </div>
