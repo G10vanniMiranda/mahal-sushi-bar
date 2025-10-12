@@ -14,7 +14,7 @@ export default function Footer() {
 
                     <div className='flex flex-col gap-2'>
                         <h2 className='text-white'>Experimente o melhor da culinária japonesa com ingredientes frescos.</h2>
-                        <h2 className='text-white'>Apenas Delivery</h2>
+                        <h2 className='text-white'>Apenas Delivery e Retirada</h2>
                     </div>
 
                     <div className='flex gap-4 py-2'>

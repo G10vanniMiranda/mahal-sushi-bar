@@ -12,7 +12,7 @@ export default function Delivery() {
                     <h1 className="text-3xl font-bold text-center text-black">Explore nosso cardápio</h1>
 
                     <Link
-                        href="/"
+                        href="https://www.ifood.com.br/delivery/porto-velho-ro/mahal-sushi-bar-sao-cristovao/a3bd4f6c-414c-47ea-afb6-c1a6d5229e9c?utm_medium=share"
                         className="w-48 text-center bg-yellow-300 hover:bg-transparent hover:border-2 cursor-pointer text-white hover:text-black font-bold py-2 px-4 rounded"
                         target="_blank"
                     >
@@ -30,6 +30,8 @@ export default function Delivery() {
                 </div>
 
             </section>
+
+            {/* Section 2 */}
 
         </div>
     );
