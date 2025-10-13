@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WhatsappButton from "../components/WhatsappButton";
 
 export default function Delivery() {
     return (
@@ -32,6 +33,9 @@ export default function Delivery() {
             </section>
 
             {/* Section 2 */}
+
+
+            <WhatsappButton />
 
         </div>
     );
