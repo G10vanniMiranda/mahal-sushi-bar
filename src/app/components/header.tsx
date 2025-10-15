@@ -31,7 +31,7 @@ export default function Header() {
             />
 
             <button
-                className="md:hidden flex flex-col justify-center items-center  md:mr-0 mr-5"
+                className="md:hidden flex flex-col justify-center items-center md:mr-0 mr-5"
                 onClick={() => setOpen(!open)}
                 aria-label="Abrir menu"
             >
