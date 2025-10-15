@@ -185,7 +185,7 @@ export default function Home() {
 
             <p className="font-semibold text-zinc-800">Ana Souza</p>
 
-            <span className="text-zinc-600 text-sm mb-2">"O melhor sushi da cidade! Ingredientes frescos e entrega super rápida."</span>
+            <span className="text-zinc-600 text-sm mb-2">&quot;O melhor sushi da cidade! Ingredientes frescos e entrega super rápida.&quot;</span>
 
           </div>
 
@@ -213,7 +213,7 @@ export default function Home() {
 
             <p className="font-semibold text-zinc-800">Carlos Lima</p>
 
-            <span className="text-zinc-600 text-sm mb-2">"Atendimento personalizado e pratos montados com muito capricho. Recomendo!"</span>
+            <span className="text-zinc-600 text-sm mb-2">&quot;Atendimento personalizado e pratos montados com muito capricho. Recomendo!&quot;</span>
 
           </div>
 
@@ -241,7 +241,7 @@ export default function Home() {
 
             <p className="font-semibold text-zinc-800">Fernanda Dias</p>
 
-            <span className="text-zinc-600 text-sm mb-2">"Sabor incrível e apresentação impecável. Voltarei a pedir com certeza!"</span>
+            <span className="text-zinc-600 text-sm mb-2">&quot;Sabor incrível e apresentação impecável. Voltarei a pedir com certeza!&quot;</span>
 
           </div>
 
