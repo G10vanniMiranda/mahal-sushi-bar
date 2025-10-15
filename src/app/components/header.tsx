@@ -5,6 +5,7 @@ import { IoIosCloseCircleOutline } from 'react-icons/io'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { MdMenuOpen } from 'react-icons/md'
 
 export default function Header() {
     const [open, setOpen] = useState(false);
@@ -34,13 +35,14 @@ export default function Header() {
                 onClick={() => setOpen(!open)}
                 aria-label="Abrir menu"
             >
-                <span className="block w-8 h-1 bg-yellow-400 mb-1 rounded"></span>
-                <span className="block w-8 h-1 bg-yellow-400 mb-1 rounded"></span>
-                <span className="block w-8 h-1 bg-yellow-400 mb-1 rounded"></span>
+
+                <MdMenuOpen className='text-yellow-400 text-5xl' />
 
             </button>
 
+            {/* Desktop Menu */}
             <div className='hidden md:flex items-center gap-10'>
+
                 <Link
                     href="/"
                     className={`text-gold border-b-2 transition ${pathname === "/" ? "border-yellow-300" : "border-transparent hover:border-yellow-300"
@@ -56,8 +58,10 @@ export default function Header() {
                 >
                     DELIVERY
                 </Link>
+
             </div>
 
+            {/* Mobile Menu */}
             {open && (
                 <div className="md:hidden absolute top-0 left-0 w-full h-screen bg-gold flex flex-col items-center justify-center gap-6">
 
