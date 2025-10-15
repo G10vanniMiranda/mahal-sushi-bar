@@ -5,7 +5,7 @@ export default function WhatsappButton() {
     return (
         <div className="fixed bottom-10 right-10 z-50">
             <Link
-                href="https://wa.me/5569993533868"
+                href="https://wa.me/5569999726369?text=Olá%2C+gostaria+de+fazer+um+pedido%21"
                 className="flex items-center relative animate-pulse"
                 aria-label="Abrir conversa no WhatsApp"
                 target="_blank"
