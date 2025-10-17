@@ -59,8 +59,9 @@ export default function ReviewsSection() {
       setComment("");
       setPhoto(null);
       setPreview(null);
-    } catch (err: any) {
-      setError(err.message || "Erro inesperado");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Erro inesperado";
+      setError(message);
     } finally {
       setLoading(false);
     }

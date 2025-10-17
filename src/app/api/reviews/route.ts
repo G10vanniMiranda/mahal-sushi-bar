@@ -41,7 +41,7 @@ export async function GET() {
     // Sort newest first
     reviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     return NextResponse.json(reviews);
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Failed to load reviews" }, { status: 500 });
   }
 }
@@ -62,10 +62,11 @@ export async function POST(req: NextRequest) {
       name = String(form.get("name") || "").slice(0, 80);
       rating = Number(form.get("rating") || 0);
       comment = String(form.get("comment") || "").slice(0, 500);
-      const file = form.get("photo") as unknown as File | null;
-      if (file && typeof (file as any).arrayBuffer === "function") {
+      const fileEntry = form.get("photo");
+      const file = fileEntry instanceof File ? fileEntry : null;
+      if (file) {
         const bytes = Buffer.from(await file.arrayBuffer());
-        const ext = path.extname((file as any).name || "") || ".jpg";
+        const ext = path.extname(file.name || "") || ".jpg";
         const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
         const fpath = path.join(uploadsDir, fname);
         await fs.writeFile(fpath, bytes);
@@ -105,7 +106,7 @@ export async function POST(req: NextRequest) {
     await writeReviews(reviews);
 
     return NextResponse.json(review, { status: 201 });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Failed to save review" }, { status: 500 });
   }
 }
