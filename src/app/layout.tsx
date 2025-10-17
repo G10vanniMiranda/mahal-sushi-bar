@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Mahal Sushi Bar",
   description: "Experimente o melhor da culinária japonesa com ingredientes frescos e ambiente acolhedor.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

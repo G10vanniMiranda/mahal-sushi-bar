@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 
 type Review = {
   id: string;
@@ -69,10 +70,25 @@ export default function ReviewsSection() {
 
   return (
     <section id="depoimentos" className="w-full py-16 px-4 bg-zinc-100 flex flex-col items-center">
-      <h2 className="text-2xl sm:text-3xl font-bold text-zinc-800 text-center mb-8">Depoimentos de Clientes</h2>
+      <motion.h2
+        className="text-2xl sm:text-3xl font-bold text-zinc-800 text-center mb-8"
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        Depoimentos de Clientes
+      </motion.h2>
 
       {/* Formulário */}
-      <form onSubmit={onSubmit} className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+      <motion.form
+        onSubmit={onSubmit}
+        className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4 mb-10"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium text-zinc-700" htmlFor="name">Seu nome</label>
           <input
@@ -157,12 +173,19 @@ export default function ReviewsSection() {
         {error && (
           <div className="md:col-span-2 text-red-600 text-sm">{error}</div>
         )}
-      </form>
+  </motion.form>
 
       {/* Lista de depoimentos */}
       <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {reviews.map((r) => (
-          <div key={r.id} className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center">
+        {reviews.map((r, idx) => (
+          <motion.div
+            key={r.id}
+            className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: Math.min(idx * 0.05, 0.4) }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={r.photoUrl || "/clientes/cliente1.jpg"}
@@ -185,7 +208,7 @@ export default function ReviewsSection() {
             </div>
             <p className="font-semibold text-zinc-800">{r.name}</p>
             <span className="text-zinc-600 text-sm mb-2 whitespace-pre-line">{r.comment}</span>
-          </div>
+          </motion.div>
         ))}
         {reviews.length === 0 && (
           <p className="col-span-full text-center text-zinc-600">Seja o primeiro a deixar um depoimento!</p>

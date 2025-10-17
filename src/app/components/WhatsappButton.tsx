@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { IoLogoWhatsapp } from "react-icons/io";
+import { motion } from "framer-motion";
 
 export default function WhatsappButton() {
   return (
@@ -12,14 +15,21 @@ export default function WhatsappButton() {
     >
       <Link
         href="https://wa.me/5569999726369?text=Olá%2C+gostaria+de+fazer+um+pedido%21"
-        className="flex items-center relative animate-pulse"
+        className="flex items-center relative"
         aria-label="Abrir conversa no WhatsApp"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className="z-20">
+        <motion.span
+          className="z-20"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <IoLogoWhatsapp size={70} color="#25D366" />
-        </span>
+        </motion.span>
       </Link>
     </div>
   );
