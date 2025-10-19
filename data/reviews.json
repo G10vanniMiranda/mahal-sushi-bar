@@ -6,5 +6,12 @@
     "comment": "Melhor sushi da cidade, recomendo!!",
     "photoUrl": "/uploads/1760636717023-kqvq4dizzz.jpg",
     "createdAt": "2025-10-16T17:45:17.025Z"
+  },
+  {
+    "id": "1760914143648-kqiu3a3tv",
+    "name": "Marilene",
+    "rating": 5,
+    "comment": "Amei o sushi do Mahal, muito bom feito e saboroso.",
+    "createdAt": "2025-10-19T22:49:03.648Z"
   }
 ]

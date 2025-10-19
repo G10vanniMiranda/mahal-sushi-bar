@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, useReducedMotion } from "framer-motion";
 import { PropsWithChildren } from "react";
 
 type MotionSectionProps = PropsWithChildren<{
@@ -24,10 +24,19 @@ export default function MotionSection({
   once = true,
   id,
 }: MotionSectionProps) {
+  const prefersReducedMotion = useReducedMotion();
   const variants: Variants = {
     hidden: { opacity: 0, y },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut", delay } },
   };
+
+  if (prefersReducedMotion) {
+    return (
+      <section id={id} className={className}>
+        {children}
+      </section>
+    );
+  }
 
   return (
     <motion.section

@@ -31,7 +31,6 @@ export default function Delivery() {
 
             {/* Section 2 */}
 
-
             <WhatsappButton />
 
         </div>

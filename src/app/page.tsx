@@ -39,10 +39,10 @@ export default function Home() {
 
         </div>
 
-  </MotionSection>
+      </MotionSection>
 
-  {/* Section 2 */}
-  <MotionSection id="sobre" className="w-full min-h-[400px] flex flex-col md:flex-row items-center justify-center py-16 px-4">
+      {/* Section 2 */}
+      <MotionSection id="sobre" className="w-full min-h-[400px] flex flex-col md:flex-row items-center justify-center py-16 px-4">
 
         <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
           <Image
@@ -69,16 +69,16 @@ export default function Home() {
 
         </div>
 
-  </MotionSection>
+      </MotionSection>
 
-  {/* Section 3 - Destaques */}
-  <HighlightsSection />
+      {/* Section 3 - Destaques */}
+      <HighlightsSection />
 
       {/* Section 4 - Depoimentos (dinâmico) */}
       <ReviewsSection />
 
-  {/* Section 5 */}
-  <MotionSection id="localizacao" className="w-full py-16 px-4 bg-white flex flex-col items-center">
+      {/* Section 5 */}
+      <MotionSection id="localizacao" className="w-full py-16 px-4 bg-white flex flex-col items-center">
         <h2 className="text-2xl sm:text-3xl font-bold text-zinc-800 text-center mb-8">
           Localização & Horário de Funcionamento
         </h2>

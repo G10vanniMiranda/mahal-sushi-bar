@@ -21,6 +21,7 @@ export default function ReviewsSection() {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/reviews")
@@ -44,7 +45,8 @@ export default function ReviewsSection() {
     e.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
-    setError(null);
+  setError(null);
+  setSuccess(null);
     try {
       const form = new FormData();
       form.set("name", name.trim());
@@ -55,17 +57,39 @@ export default function ReviewsSection() {
       if (!res.ok) throw new Error("Falha ao enviar comentário");
       const created: Review = await res.json();
       setReviews((prev) => [created, ...prev]);
-      setName("");
+  setName("");
       setRating(5);
       setComment("");
       setPhoto(null);
       setPreview(null);
+  setSuccess("Depoimento enviado com sucesso!");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Erro inesperado";
       setError(message);
     } finally {
       setLoading(false);
     }
+  }
+
+  function onPickFile(file: File | null) {
+    setError(null);
+    setSuccess(null);
+    if (!file) {
+      setPhoto(null);
+      return;
+    }
+    const maxBytes = 2 * 1024 * 1024; // 2MB
+    if (!file.type.startsWith("image/")) {
+      setError("Por favor, selecione uma imagem válida.");
+      setPhoto(null);
+      return;
+    }
+    if (file.size > maxBytes) {
+      setError("A imagem deve ter no máximo 2MB.");
+      setPhoto(null);
+      return;
+    }
+    setPhoto(file);
   }
 
   return (
@@ -148,7 +172,7 @@ export default function ReviewsSection() {
             id="photo"
             type="file"
             accept="image/*"
-            onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+            onChange={(e) => onPickFile(e.target.files?.[0] || null)}
           />
         </div>
 
@@ -170,9 +194,10 @@ export default function ReviewsSection() {
           </div>
         )}
 
-        {error && (
-          <div className="md:col-span-2 text-red-600 text-sm">{error}</div>
-        )}
+        <div className="md:col-span-2">
+          <p aria-live="assertive" className="text-red-600 text-sm min-h-5">{error}</p>
+          <p aria-live="polite" className="text-green-600 text-sm min-h-5">{success}</p>
+        </div>
   </motion.form>
 
       {/* Lista de depoimentos */}

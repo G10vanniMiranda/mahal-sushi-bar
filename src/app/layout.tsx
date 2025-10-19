@@ -30,8 +30,14 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <a
+          href="#conteudo-principal"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:bg-yellow-400 focus:text-black focus:px-3 focus:py-2 focus:rounded"
+        >
+          Pular para o conteúdo
+        </a>
         <Header />
-        {children}
+        <main id="conteudo-principal">{children}</main>
         <Footer />
       </body>
     </html>
