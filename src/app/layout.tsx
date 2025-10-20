@@ -15,11 +15,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mahal Sushi Bar",
-  description: "Experimente o melhor da culinária japonesa com ingredientes frescos e ambiente acolhedor.",
-  icons: {
-    icon: "/favicon.svg",
+  title: {
+    default: "Mahal Sushi Bar",
+    template: "%s | Mahal Sushi Bar",
   },
+  description:
+    "Experimente o melhor da culinária japonesa com ingredientes frescos e apresentação impecável no conforto da sua casa.",
+  keywords: [
+    "sushi",
+    "japonês",
+    "delivery",
+    "Porto Velho",
+    "Mahal Sushi Bar",
+  ],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    title: "Mahal Sushi Bar",
+    description:
+      "Culinária japonesa autêntica com ingredientes frescos e excelência no preparo.",
+    siteName: "Mahal Sushi Bar",
+    images: [
+      {
+        url: "/combo.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Peças de sushi selecionadas do Mahal Sushi Bar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mahal Sushi Bar",
+    description:
+      "Culinária japonesa autêntica com ingredientes frescos e excelência no preparo.",
+    images: ["/combo.jpeg"],
+  },
+  themeColor: "#2A2218",
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({

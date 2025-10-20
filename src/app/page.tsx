@@ -3,42 +3,34 @@ import Link from "next/link";
 import WhatsappButton from "./components/WhatsappButton";
 import ReviewsSection from "./components/ReviewsSection";
 import MotionSection from "./components/MotionSection";
-// Remove direct framer-motion usage in this server component
-// and use client components instead
 import HighlightsSection from "./components/HighlightsSection";
 
 export default function Home() {
   return (
-    <div className="w-screen flex flex-col items-center justify-center bg-gold">
+    <div className="w-screen flex flex-col items-center justify-center bg-[#2A2218]">
 
       {/* Section 1 */}
       <MotionSection
         id="home"
-        className="bg-zinc-800 w-full min-h-screen flex flex-col items-center justify-center md:items-end text-white px-2 pt-24 bg-[url(/fundomobile1.jpg)] md:bg-[url(/fundo1.jpg)] bg-cover bg-center bg-no-repeat"
+        className="w-full min-h-screen flex flex-col items-center justify-center md:items-end text-white px-2 pt-24 bg-[url(/fundomobile1.jpg)] md:bg-[url(/fundo1.jpg)] bg-cover bg-center bg-no-repeat"
       >
-
-        <div className="bg-black/50 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto md:h-[400px] flex flex-col items-center justify-center gap-8 md:gap-12 md:mr-32 md:mt-4 p-4 sm:p-8 rounded-2xl">
-
-          <h1 className="text-2xl sm:text-3xl font-bold text-white text-center">
+        <div className="backdrop-blur-sm bg-black/55 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto md:h-[420px] flex flex-col items-center justify-center gap-6 md:gap-10 md:mr-32 md:mt-4 p-5 sm:p-8 rounded-2xl shadow-2xl">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-center">
             Experiência japonesa autêntica, no conforto da sua casa.
           </h1>
-
-          <p className="text-center text-base md:text-2xl">
+          <p className="text-center text-base sm:text-lg md:text-xl text-zinc-100/90">
             No MAHAL Sushi Bar, cada peça é criada com maestria, unindo ingredientes frescos, técnica refinada e apresentação impecável.
             Viva uma experiência gastronômica premium sem sair de casa.
           </p>
-
           <Link
             href="https://app.cardapioweb.com/mahal_sushi_bar"
-            className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white font-bold py-2 px-4 rounded animate-pulse text-center"
+            className="w-full sm:w-auto inline-flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-5 rounded-lg shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400"
             target="_blank"
             rel="noopener noreferrer"
           >
-            FAÇA SEU PEDIDO AGORA
+            Faça seu pedido agora
           </Link>
-
         </div>
-
       </MotionSection>
 
       {/* Section 2 */}
@@ -61,7 +53,7 @@ export default function Home() {
             Sobre o Mahal Sushi Bar
           </h2>
 
-          <p className="text-white text-center text-base sm:text-lg md:text-xl">
+          <p className="text-white/95 text-center text-base sm:text-lg md:text-xl leading-relaxed">
             O Mahal Sushi Bar nasceu da paixão pela culinária japonesa e do desejo de proporcionar uma experiência única aos nossos clientes.
             Utilizamos ingredientes frescos, selecionados com rigor, e prezamos pela excelência em cada detalhe, do preparo à apresentação dos pratos.
             Nosso compromisso é levar até você o verdadeiro sabor do Japão, com qualidade, tradição e um toque especial de criatividade.

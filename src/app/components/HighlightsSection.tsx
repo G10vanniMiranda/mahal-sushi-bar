@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function HighlightsSection() {
   return (
-    <MotionSection id="destaques" className="w-full py-16 px-4 bg-white flex flex-col items-center">
+    <MotionSection id="destaques" className="w-full py-16 px-4 bg-white flex flex-col md:flex-row items-center justify-center">
       {/* Frescor */}
       <motion.div
         className="flex flex-col items-center text-center"
