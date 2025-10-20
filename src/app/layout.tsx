@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mahal-sushi-bar.vercel.app"),
   title: {
     default: "Mahal Sushi Bar",
     template: "%s | Mahal Sushi Bar",
@@ -51,8 +52,12 @@ export const metadata: Metadata = {
       "Culinária japonesa autêntica com ingredientes frescos e excelência no preparo.",
     images: ["/combo.jpeg"],
   },
-  themeColor: "#2A2218",
   alternates: { canonical: "/" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#2A2218",
+  colorScheme: "light",
 };
 
 export default function RootLayout({

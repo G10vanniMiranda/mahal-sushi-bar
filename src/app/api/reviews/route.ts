@@ -11,11 +11,16 @@ type Review = {
   createdAt: string;
 };
 
-const dataDir = path.join(process.cwd(), "data");
+// On Vercel/functions, the filesystem is read-only. Use in-memory fallback.
+const canUseFs = !process.env.VERCEL;
+const baseDir = canUseFs ? process.cwd() : "/tmp";
+const dataDir = path.join(baseDir, "data");
 const dataFile = path.join(dataDir, "reviews.json");
-const uploadsDir = path.join(process.cwd(), "public", "uploads");
+const uploadsDir = path.join(baseDir, "uploads");
+let memoryReviews: Review[] = [];
 
 async function ensureFiles() {
+  if (!canUseFs) return;
   await fs.mkdir(dataDir, { recursive: true });
   await fs.mkdir(uploadsDir, { recursive: true });
   try {
@@ -26,12 +31,19 @@ async function ensureFiles() {
 }
 
 async function readReviews(): Promise<Review[]> {
+  if (!canUseFs) {
+    return [...memoryReviews];
+  }
   await ensureFiles();
   const raw = await fs.readFile(dataFile, "utf-8");
   return JSON.parse(raw || "[]");
 }
 
 async function writeReviews(reviews: Review[]) {
+  if (!canUseFs) {
+    memoryReviews = [...reviews];
+    return;
+  }
   await fs.writeFile(dataFile, JSON.stringify(reviews, null, 2), "utf-8");
 }
 
@@ -65,12 +77,18 @@ export async function POST(req: NextRequest) {
       const fileEntry = form.get("photo");
       const file = fileEntry instanceof File ? fileEntry : null;
       if (file) {
-        const bytes = Buffer.from(await file.arrayBuffer());
-        const ext = path.extname(file.name || "") || ".jpg";
-        const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-        const fpath = path.join(uploadsDir, fname);
-        await fs.writeFile(fpath, bytes);
-        photoUrl = `/uploads/${fname}`;
+        if (canUseFs) {
+          const bytes = Buffer.from(await file.arrayBuffer());
+          const ext = path.extname(file.name || "") || ".jpg";
+          const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
+          const fpath = path.join(uploadsDir, fname);
+          await fs.writeFile(fpath, bytes);
+          photoUrl = `/uploads/${fname}`;
+        } else {
+          const buffer = Buffer.from(await file.arrayBuffer());
+          const mime = file.type || "image/jpeg";
+          photoUrl = `data:${mime};base64,${buffer.toString("base64")}`;
+        }
       }
     } else {
       // JSON fallback: { name, rating, comment, imageBase64? }
@@ -80,12 +98,16 @@ export async function POST(req: NextRequest) {
       comment = String(json.comment || "").slice(0, 500);
       const imageBase64: string | undefined = json.imageBase64;
       if (imageBase64) {
-        const base64Data = imageBase64.replace(/^data:[^;]+;base64,/, "");
-        const bytes = Buffer.from(base64Data, "base64");
-        const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
-        const fpath = path.join(uploadsDir, fname);
-        await fs.writeFile(fpath, bytes);
-        photoUrl = `/uploads/${fname}`;
+        if (canUseFs) {
+          const base64Data = imageBase64.replace(/^data:[^;]+;base64,/, "");
+          const bytes = Buffer.from(base64Data, "base64");
+          const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
+          const fpath = path.join(uploadsDir, fname);
+          await fs.writeFile(fpath, bytes);
+          photoUrl = `/uploads/${fname}`;
+        } else {
+          photoUrl = imageBase64.startsWith("data:") ? imageBase64 : `data:image/jpeg;base64,${imageBase64}`;
+        }
       }
     }
 
@@ -106,7 +128,8 @@ export async function POST(req: NextRequest) {
     await writeReviews(reviews);
 
     return NextResponse.json(review, { status: 201 });
-  } catch {
+  } catch (e) {
+    console.error("/api/reviews POST error", e);
     return NextResponse.json({ error: "Failed to save review" }, { status: 500 });
   }
 }
