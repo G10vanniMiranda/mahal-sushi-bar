@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import WhatsappButton from "./components/WhatsappButton";
 import ReviewsSection from "./components/ReviewsSection";
 import MotionSection from "./components/MotionSection";
 import HighlightsSection from "./components/HighlightsSection";
+import CtaButton from "./components/CtaButton";
 
 export default function Home() {
   return (
@@ -22,14 +22,9 @@ export default function Home() {
             No MAHAL Sushi Bar, cada peça é criada com maestria, unindo ingredientes frescos, técnica refinada e apresentação impecável.
             Viva uma experiência gastronômica premium sem sair de casa.
           </p>
-          <Link
-            href="https://app.cardapioweb.com/mahal_sushi_bar"
-            className="w-full sm:w-auto inline-flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-5 rounded-lg shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <CtaButton href="https://app.cardapioweb.com/mahal_sushi_bar" className="w-full sm:w-auto">
             Faça seu pedido agora
-          </Link>
+          </CtaButton>
         </div>
       </MotionSection>
 

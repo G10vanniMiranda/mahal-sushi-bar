@@ -20,12 +20,30 @@ export default function WhatsappButton() {
         target="_blank"
         rel="noopener noreferrer"
       >
+        {/* Pulsing ring */}
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 -m-2 rounded-full border-2 border-[#25D366] opacity-40"
+          style={{ width: 84, height: 84 }}
+          initial={{ scale: 0.9, opacity: 0.3 }}
+          animate={{ scale: [1, 1.4, 1], opacity: [0.35, 0, 0.35] }}
+          transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 2 }}
+        />
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 -m-2 rounded-full border-2 border-[#25D366] opacity-30"
+          style={{ width: 84, height: 84 }}
+          initial={{ scale: 1, opacity: 0.25 }}
+          animate={{ scale: [1, 1.6, 1], opacity: [0.25, 0, 0.25] }}
+          transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5, delay: 0.6 }}
+        />
+        {/* Icon with subtle float */}
         <motion.span
           className="z-20"
           initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          whileHover={{ scale: 1.05 }}
+          animate={{ scale: 1, opacity: 1, y: [0, -3, 0] }}
+          transition={{ type: "spring", stiffness: 260, damping: 20, y: { duration: 2.5, repeat: Infinity } }}
+          whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.95 }}
         >
           <IoLogoWhatsapp size={70} color="#25D366" />
