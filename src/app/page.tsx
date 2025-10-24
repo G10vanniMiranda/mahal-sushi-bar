@@ -78,9 +78,8 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-semibold text-zinc-800 mb-2">Endereço</h3>
               <p className="text-zinc-700">
-                Rua Duque de Caxias, 2586<br />
-                São Cristóvão, Porto Velho - RO<br />
-                CEP: 76820-832
+                R. Estácio De Sá, 6693 - Cuniã<br />
+                Porto Velho - RO
               </p>
             </div>
 
@@ -104,7 +103,7 @@ export default function Home() {
           <div className="flex-1 w-full h-[300px] md:h-[450px] rounded-2xl overflow-hidden shadow-lg">
 
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d985.825840295568!2d-63.89012483046204!3d-8.757501673985878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92325cc7debb0803%3A0x66d79b755e3dd3e1!2sR.%20Duque%20de%20Caxias%2C%202586%20-%20S%C3%A3o%20Crist%C3%B3v%C3%A3o%2C%20Porto%20Velho%20-%20RO%2C%2076820-832!5e0!3m2!1spt-BR!2sbr!4v1760500858250!5m2!1spt-BR!2sbr"
+              src="https://www.google.com/maps?q=R.%20Est%C3%A1cio%20De%20S%C3%A1%2C%206693%20-%20Cuni%C3%A3%2C%20Porto%20Velho%20-%20RO&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
