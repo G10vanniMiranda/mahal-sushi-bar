@@ -20,7 +20,7 @@ export default function WhatsappButton() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {/* Pulsing ring */}
+        {/* Anéis pulsantes para destacar o botão sem exageros */}
         <motion.span
           aria-hidden
           className="absolute inset-0 -m-2 rounded-full border-2 border-[#25D366] opacity-40"
@@ -37,7 +37,7 @@ export default function WhatsappButton() {
           animate={{ scale: [1, 1.6, 1], opacity: [0.25, 0, 0.25] }}
           transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5, delay: 0.6 }}
         />
-        {/* Icon with subtle float */}
+        {/* Ícone com flutuação sutil contínua + animações de hover/tap */}
         <motion.span
           className="z-20"
           initial={{ scale: 0.9, opacity: 0 }}

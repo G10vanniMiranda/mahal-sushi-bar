@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mahal-sushi-bar.vercel.app"),
+  metadataBase: new URL("https://www.mahalsushibar.com/"),
   title: {
     default: "Mahal Sushi Bar",
     template: "%s | Mahal Sushi Bar",

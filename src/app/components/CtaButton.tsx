@@ -11,6 +11,7 @@ type Props = PropsWithChildren<{
 }>;
 
 export default function CtaButton({ href, className, children, newTab = true, ariaLabel }: Props) {
+  // Abre em nova aba para links externos (por padrão)
   const external = newTab || href.startsWith("http");
   const target = external ? "_blank" : undefined;
   const rel = external ? "noopener noreferrer" : undefined;
@@ -31,6 +32,7 @@ export default function CtaButton({ href, className, children, newTab = true, ar
       rel={rel}
       aria-label={ariaLabel}
       className={classes}
+      // Animações: fade/scale na entrada, hover/tap responsivo e leve flutuação em loop para chamar atenção
       initial={{ scale: 0.98, opacity: 0 }}
       whileInView={{ scale: 1, opacity: 1 }}
       viewport={{ once: true }}

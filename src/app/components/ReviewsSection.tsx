@@ -45,8 +45,8 @@ export default function ReviewsSection() {
     e.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
-  setError(null);
-  setSuccess(null);
+    setError(null);
+    setSuccess(null);
     try {
       const form = new FormData();
       form.set("name", name.trim());
@@ -57,12 +57,12 @@ export default function ReviewsSection() {
       if (!res.ok) throw new Error("Falha ao enviar comentário");
       const created: Review = await res.json();
       setReviews((prev) => [created, ...prev]);
-  setName("");
+      setName("");
       setRating(5);
       setComment("");
       setPhoto(null);
       setPreview(null);
-  setSuccess("Depoimento enviado com sucesso!");
+      setSuccess("Depoimento enviado com sucesso!");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Erro inesperado";
       setError(message);
@@ -198,7 +198,7 @@ export default function ReviewsSection() {
           <p aria-live="assertive" className="text-red-600 text-sm min-h-5">{error}</p>
           <p aria-live="polite" className="text-green-600 text-sm min-h-5">{success}</p>
         </div>
-  </motion.form>
+      </motion.form>
 
       {/* Lista de depoimentos */}
       <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
