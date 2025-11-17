@@ -1,69 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { createClient } from "@supabase/supabase-js";
 
-type Review = {
-  id: string;
-  name: string;
-  rating: number; // 1-5
-  comment: string;
-  photoUrl?: string; // relative to public
-  createdAt: string;
-};
+// 📌 VARS DE AMBIENTE — Coloque as chaves no .env.local e na Vercel
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;              // <- colocar no .env
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; // <- colocar no .env (NUNCA no front)
+const bucketName = "pdv";                                              // seu bucket
+const bucketFolder = "reviews";                                        // pasta onde salvamos as fotos
 
-// On Vercel/functions, the filesystem is read-only. Use in-memory fallback.
-const canUseFs = !process.env.VERCEL;
-const baseDir = canUseFs ? process.cwd() : "/tmp";
-const dataDir = path.join(baseDir, "data");
-const dataFile = path.join(dataDir, "reviews.json");
-const uploadsDir = path.join(baseDir, "uploads");
-let memoryReviews: Review[] = [];
-
-async function ensureFiles() {
-  if (!canUseFs) return;
-  await fs.mkdir(dataDir, { recursive: true });
-  await fs.mkdir(uploadsDir, { recursive: true });
-  try {
-    await fs.access(dataFile);
-  } catch {
-    await fs.writeFile(dataFile, "[]", "utf-8");
-  }
-}
-
-async function readReviews(): Promise<Review[]> {
-  if (!canUseFs) {
-    return [...memoryReviews];
-  }
-  await ensureFiles();
-  const raw = await fs.readFile(dataFile, "utf-8");
-  return JSON.parse(raw || "[]");
-}
-
-async function writeReviews(reviews: Review[]) {
-  if (!canUseFs) {
-    memoryReviews = [...reviews];
-    return;
-  }
-  await fs.writeFile(dataFile, JSON.stringify(reviews, null, 2), "utf-8");
-}
+// Criando cliente com Service Role (somente no backend)
+const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 
 export async function GET() {
   try {
-    const reviews = await readReviews();
-    // Sort newest first
-    reviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const { data, error } = await supabase
+      .from("reviews")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Erro GET:", error);
+      return NextResponse.json({ error: "Erro ao carregar reviews" }, { status: 500 });
+    }
+
+    const reviews = data?.map((r) => ({
+      id: r.id,
+      name: r.name,
+      rating: r.rating,
+      comment: r.comment,
+      photoUrl: r.photo_url || undefined,
+      createdAt: r.created_at,
+    })) || [];
+
     return NextResponse.json(reviews);
-  } catch {
-    return NextResponse.json({ error: "Failed to load reviews" }, { status: 500 });
+  } catch (e) {
+    console.error("Exceção GET:", e);
+    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    await ensureFiles();
-
     const contentType = req.headers.get("content-type") || "";
-
     let name = "";
     let rating = 0;
     let comment = "";
@@ -71,65 +48,81 @@ export async function POST(req: NextRequest) {
 
     if (contentType.includes("multipart/form-data")) {
       const form = await req.formData();
+
       name = String(form.get("name") || "").slice(0, 80);
       rating = Number(form.get("rating") || 0);
       comment = String(form.get("comment") || "").slice(0, 500);
+
       const fileEntry = form.get("photo");
       const file = fileEntry instanceof File ? fileEntry : null;
+
       if (file) {
-        if (canUseFs) {
-          const bytes = Buffer.from(await file.arrayBuffer());
-          const ext = path.extname(file.name || "") || ".jpg";
-          const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-          const fpath = path.join(uploadsDir, fname);
-          await fs.writeFile(fpath, bytes);
-          photoUrl = `/uploads/${fname}`;
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        const originalName = file.name || "photo.jpg";
+        const ext = originalName.includes(".")
+          ? originalName.split(".").pop()
+          : "jpg";
+
+        const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const storagePath = `${bucketFolder}/${fileName}`;
+
+        // Upload da imagem
+        const { error: uploadError } = await supabase.storage
+          .from(bucketName)
+          .upload(storagePath, buffer, {
+            contentType: file.type || "image/jpeg",
+          });
+
+        if (uploadError) {
+          console.error("Erro upload foto:", uploadError);
         } else {
-          const buffer = Buffer.from(await file.arrayBuffer());
-          const mime = file.type || "image/jpeg";
-          photoUrl = `data:${mime};base64,${buffer.toString("base64")}`;
+          // Pega a URL pública da imagem
+          const { data: publicUrlData } = supabase.storage
+            .from(bucketName)
+            .getPublicUrl(storagePath);
+
+          photoUrl = publicUrlData.publicUrl;
         }
       }
     } else {
-      // JSON fallback: { name, rating, comment, imageBase64? }
-      const json = await req.json().catch(() => ({}));
-      name = String(json.name || "").slice(0, 80);
-      rating = Number(json.rating || 0);
-      comment = String(json.comment || "").slice(0, 500);
-      const imageBase64: string | undefined = json.imageBase64;
-      if (imageBase64) {
-        if (canUseFs) {
-          const base64Data = imageBase64.replace(/^data:[^;]+;base64,/, "");
-          const bytes = Buffer.from(base64Data, "base64");
-          const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
-          const fpath = path.join(uploadsDir, fname);
-          await fs.writeFile(fpath, bytes);
-          photoUrl = `/uploads/${fname}`;
-        } else {
-          photoUrl = imageBase64.startsWith("data:") ? imageBase64 : `data:image/jpeg;base64,${imageBase64}`;
-        }
-      }
+      return NextResponse.json({ error: "Formato inválido" }, { status: 400 });
     }
 
-    if (!name || !comment || !(rating >= 1 && rating <= 5)) {
-      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    if (!name || !comment || !rating || rating < 1 || rating > 5) {
+      return NextResponse.json({ error: "Campos inválidos" }, { status: 400 });
     }
 
-    const reviews = await readReviews();
-    const review: Review = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-      name,
-      rating,
-      comment,
-      photoUrl,
-      createdAt: new Date().toISOString(),
+    // Inserir no banco
+    const { data, error } = await supabase
+      .from("reviews")
+      .insert({
+        name,
+        rating,
+        comment,
+        photo_url: photoUrl || null,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Erro insert:", error);
+      return NextResponse.json({ error: "Erro ao salvar review" }, { status: 500 });
+    }
+
+    const created = {
+      id: data.id,
+      name: data.name,
+      rating: data.rating,
+      comment: data.comment,
+      photoUrl: data.photo_url || undefined,
+      createdAt: data.created_at,
     };
-    reviews.push(review);
-    await writeReviews(reviews);
 
-    return NextResponse.json(review, { status: 201 });
+    return NextResponse.json(created, { status: 201 });
   } catch (e) {
-    console.error("/api/reviews POST error", e);
-    return NextResponse.json({ error: "Failed to save review" }, { status: 500 });
+    console.error("Exception POST:", e);
+    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }
