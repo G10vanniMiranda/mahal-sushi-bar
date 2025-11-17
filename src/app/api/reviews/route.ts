@@ -1,17 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-// 📌 VARS DE AMBIENTE — Coloque as chaves no .env.local e na Vercel
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;              // <- colocar no .env
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; // <- colocar no .env (NUNCA no front)
-const bucketName = "pdv";                                              // seu bucket
-const bucketFolder = "reviews";                                        // pasta onde salvamos as fotos
+// 📌 Variáveis de ambiente — configure no `.env.local` (desenvolvimento)
+// e nas Variáveis de Ambiente do projeto na Vercel (produção):
+// - NEXT_PUBLIC_SUPABASE_URL = https://<seu-projeto>.supabase.co
+// - SUPABASE_SERVICE_ROLE_KEY = <chave service role> (APENAS NO BACKEND)
+// Observação: não use a Service Role no cliente. Este arquivo roda no servidor (API Route).
+const bucketName = "pdv";       // Nome do bucket no Supabase Storage
+const bucketFolder = "reviews"; // Pasta onde salvamos as fotos dentro do bucket
 
-// Criando cliente com Service Role (somente no backend)
-const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+// Lazy init do cliente Supabase para evitar erro em build quando env não está setado.
+// Isso previne o erro "Invalid supabaseUrl" durante a etapa "Collecting page data".
+function createServerSupabase() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !/^https?:\/\//i.test(supabaseUrl)) {
+    throw new Error(
+      "NEXT_PUBLIC_SUPABASE_URL inválida ou ausente. Defina uma URL HTTP/HTTPS válida no .env.local e na Vercel."
+    );
+  }
+  if (!supabaseServiceRoleKey) {
+    throw new Error(
+      "SUPABASE_SERVICE_ROLE_KEY ausente. Defina a Service Role Key no .env.local e na Vercel (apenas no backend)."
+    );
+  }
+
+  return createClient(supabaseUrl, supabaseServiceRoleKey);
+}
 
 export async function GET() {
   try {
+    const supabase = createServerSupabase();
     const { data, error } = await supabase
       .from("reviews")
       .select("*")
@@ -40,6 +60,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    const supabase = createServerSupabase();
     const contentType = req.headers.get("content-type") || "";
     let name = "";
     let rating = 0;
